@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generator Judul Artikel</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#">
+          <i class="bi bi-feather"></i>
+          Generator Judul Artikel
+        </a>
+
+        <button
+          class="navbar-toggler"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Beranda</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="fitur.html">Fitur</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="cara-kerja.html">Cara Kerja</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="tentang.html">Tentang</a>
+            </li>
+          </ul>
+
+          <button onclick="logout()" class="btn btn-danger">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <span class="badge ai-badge mb-4"> ✨ FASTEST GENERATOR </span>
+
+        <h1 class="hero-title">
+          Generate Judul Artikel
+          <br />
+          yang Menarik &
+          <span class="text-primary"> SEO Friendly </span>
+        </h1>
+
+        <p class="hero-desc">
+          Masukkan topik atau keyword, dan dapatkan berbagai ide judul artikel
+          yang menarik dalam hitungan detik.
+        </p>
+      </div>
+    </section>
+
+    <!-- GENERATOR -->
+    <section id="generator" class="mb-5">
+      <div class="container">
+        <div class="generator-card">
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-5">
+              <label class="form-label"> Masukkan Keyword / Topik </label>
+
+              <input
+                type="text"
+                id="keyword"
+                class="form-control"
+                placeholder="Contoh: manfaat olahraga pagi"
+              />
+            </div>
+
+            <div class="col-lg-2">
+              <label class="form-labelf"> Jumlah Judul </label>
+
+              <select class="form-select" id="jumlahJudul">
+                <option value="10">10 Judul</option>
+
+                <option value="20">20 Judul</option>
+
+                <option value="30">30 Judul</option>
+              </select>
+            </div>
+
+            <div class="col-lg-2">
+              <label class="form-label"> Kategori </label>
+
+              <select class="form-select">
+                <option>Umum</option>
+                <option>Teknologi</option>
+                <option>Kesehatan</option>
+                <option>Bisnis</option>
+              </select>
+            </div>
+
+            <div class="col-lg-3">
+              <button
+                id="btnGenerate"
+                onclick="generateJudul()"
+                class="btn btn-primary w-100"
+              >
+                ✨ Generate Judul
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HASIL -->
+    <section id="hasilSection" class="pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="content-card">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <h4 class="fw-bold mb-0">Hasil Generate</h4>
+
+                <button id="copySemua" class="btn btn-outline-primary">
+                  <i class="bi bi-copy"></i>
+                  Salin Semua
+                </button>
+
+                <button id="exportPdf" class="btn btn-danger">
+                  <i class="bi bi-file-earmark-pdf"></i>
+                  Export PDF
+                </button>
+
+                <button id="exportExcel" class="btn btn-success">
+                  <i class="bi bi-file-earmark-excel"></i>
+                  Export Excel
+                </button>
+              </div>
+
+              <div id="loading" style="display: none">
+                <div class="text-center py-4">
+                  <div class="spinner-border text-primary"></div>
+
+                  <p class="mt-3">Sedang membuat judul...</p>
+                </div>
+              </div>
+
+              <div id="hasil">
+                <div class="empty-state">Belum ada judul yang dihasilkan</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="content-card mb-4">
+              <h5 class="fw-bold">Tips</h5>
+
+              <div class="tip-item">🔍 Gunakan keyword spesifik</div>
+
+              <div class="tip-item">📂 Pilih kategori yang sesuai</div>
+
+              <div class="tip-item">📑 Sesuaikan jumlah judul</div>
+            </div>
+
+            <div class="content-card">
+              <h5 class="fw-bold">Statistik</h5>
+
+              <hr />
+
+              <p>Judul Dibuat</p>
+
+              <h2 id="totalJudul">0</h2>
+
+              <hr />
+
+              <p>Keyword Terakhir</p>
+
+              <h5 id="lastKeyword">-</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="tentang" class="py-5">
+      <div class="container text-center">
+        <span class="badge bg-primary mb-3"> Tentang Aplikasi </span>
+
+        <h2 class="fw-bold">Generator Judul Artikel</h2>
+
+        <p class="text-muted col-lg-8 mx-auto">
+          Aplikasi ini membantu Anda menghasilkan berbagai ide judul artikel
+          secara otomatis menggunakan template yang tersimpan pada Google
+          Spreadsheet dan diproses melalui Google Apps Script.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container text-center">
+        <p class="mb-1">© 2026 Generator Judul Artikel</p>
+
+        <small>
+          Dibangun dengan HTML, CSS, JavaScript dan Google Apps Script
+        </small>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+      if (localStorage.getItem("login") !== "true") {
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <script>
+      function logout() {
+        // hapus data login (jika pakai localStorage)
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
+
+        // arahkan ke halaman login
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>
